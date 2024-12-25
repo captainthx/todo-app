@@ -1,10 +1,19 @@
-import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { AntDesign, Entypo, Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import TodoForm from "@/components/ui/TodoForm";
+import ListItem from "@/components/ListItem";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function HomeScreen() {
   const data = [
     {
@@ -32,7 +41,20 @@ export default function HomeScreen() {
       title: "Five Item",
       content: "This is the five item",
     },
+    {
+      id: "58694a0f-3da1-471f-bd96-2323",
+      title: "Six Item",
+      content: "This is the six item",
+    },
   ];
+
+  const [openForm, setOpenForm] = React.useState(false);
+
+  const handleFormClose = () => {
+    setOpenForm(false);
+  };
+
+  const renderItem = ({ item }: any) => <ListItem item={item} />;
 
   return (
     <SafeAreaProvider>
@@ -80,46 +102,11 @@ export default function HomeScreen() {
 
         <FlatList
           contentContainerStyle={{
-            overflow: "hidden",
             width: "100%",
             paddingBottom: 100,
           }}
           data={data}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                height: 100,
-                padding: 16,
-                margin: 8,
-                backgroundColor: "#F79E89",
-                borderRadius: 16,
-                overflow: "hidden",
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 4,
-                  marginBottom: 8,
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontFamily: "worksans-semi-bold",
-                    fontSize: 22,
-                  }}
-                >
-                  {item.title}
-                </Text>
-                <Ionicons name="time-outline" size={24} />
-              </View>
-              <Text style={{ fontSize: 16 }}>{item.content}</Text>
-            </View>
-          )}
+          renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
 
@@ -134,10 +121,28 @@ export default function HomeScreen() {
             borderRadius: 50,
           }}
         >
-          <TouchableOpacity onPress={() => router.push("/slide")}>
+          <TouchableOpacity onPress={() => setOpenForm(true)}>
             <Feather name="plus" size={24} color={"white"} />
           </TouchableOpacity>
         </View>
+        {openForm && (
+          <Modal
+            transparent={true}
+            animationType="slide"
+            visible={openForm}
+            onRequestClose={() => setOpenForm(false)}
+          >
+            <TouchableWithoutFeedback onPress={() => setOpenForm(false)}>
+              <View
+                style={{
+                  flex: 1,
+                }}
+              >
+                <TodoForm onFormClose={handleFormClose} />
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );

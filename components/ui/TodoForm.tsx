@@ -1,9 +1,4 @@
-import { Fontisto, Ionicons } from "@expo/vector-icons";
-import RNDateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
-import dayjs from "dayjs";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,20 +7,29 @@ import {
   Modal,
   TouchableOpacity,
   Image,
+  Button,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-
+import dayjs from "dayjs";
 import * as ImagePicker from "expo-image-picker";
+import { AntDesign, Fontisto, Ionicons } from "@expo/vector-icons";
+import RNDateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
-export default function Slide() {
-  const [openModal, setOpenModal] = useState(false);
+type TodoFormProps = {
+  onFormClose: (e: boolean) => void;
+};
+
+const TodoForm = ({ onFormClose }: TodoFormProps) => {
+  const [openDatePicker, setOpenDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [image, setImage] = useState<string>("");
   const [showImage, setShowImage] = useState(false);
 
-  const closeModal = () => {
-    setOpenModal(false);
+  const closeModalDatePicker = () => {
+    setOpenDatePicker(false);
   };
 
   const onDateChange = (event: DateTimePickerEvent, date?: Date) => {
@@ -56,13 +60,27 @@ export default function Slide() {
     <SafeAreaProvider>
       <SafeAreaView>
         <View style={styles.container}>
-          <Text>Modal screen</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontFamily: "worksans-semi-bold", fontSize: 16 }}>
+              TODO FORM
+            </Text>
+            <TouchableOpacity onPress={() => onFormClose(true)}>
+              <AntDesign name="close" size={24} />
+            </TouchableOpacity>
+          </View>
           <TextInput
             style={{
               height: 40,
-              margin: 12,
+              margin: 8,
               borderWidth: 2,
-              padding: 10,
+              padding: 8,
               borderRadius: 8,
               borderColor: "#F79E89",
             }}
@@ -72,11 +90,11 @@ export default function Slide() {
             numberOfLines={10}
             multiline={true}
             style={{
-              margin: 12,
+              margin: 8,
               height: 100,
               textAlignVertical: "top",
               borderWidth: 2,
-              padding: 10,
+              padding: 8,
               borderRadius: 8,
               borderColor: "#F79E89",
             }}
@@ -89,20 +107,20 @@ export default function Slide() {
               selectTextOnFocus={false}
               style={{
                 height: 40,
-                margin: 12,
+                margin: 8,
                 borderWidth: 2,
-                padding: 10,
+                padding: 8,
                 borderRadius: 8,
                 borderColor: "#F79E89",
               }}
               value={dayjs(date).format("YYYY-MM-DD")}
             />
-            <TouchableOpacity onPress={() => setOpenModal(true)}>
+            <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
               <Fontisto
                 style={{
                   position: "absolute",
-                  top: -45,
-                  right: 20,
+                  top: -40,
+                  right: 16,
                 }}
                 name="date"
                 size={24}
@@ -120,12 +138,11 @@ export default function Slide() {
             {showImage && (
               <Image
                 style={{
-                  padding: 4,
-                  marginTop: 20,
+                  marginTop: 8,
                   borderRadius: 8,
-                  width: 300,
-                  height: 250,
-                  marginBottom: 20,
+                  width: 250,
+                  height: 150,
+                  marginBottom: 10,
                 }}
                 source={{ uri: image }}
               />
@@ -148,10 +165,10 @@ export default function Slide() {
         <Modal
           transparent={true}
           animationType="slide"
-          visible={openModal}
-          onRequestClose={closeModal}
+          visible={openDatePicker}
+          onRequestClose={closeModalDatePicker}
         >
-          <TouchableWithoutFeedback onPress={closeModal}>
+          <TouchableWithoutFeedback onPress={closeModalDatePicker}>
             <View
               style={{
                 flex: 1,
@@ -163,7 +180,7 @@ export default function Slide() {
                 style={{
                   position: "absolute",
                   zIndex: 999,
-                  bottom: 100,
+                  bottom: 55,
                   height: "auto",
                   alignItems: "center",
                 }}
@@ -188,13 +205,16 @@ export default function Slide() {
       </SafeAreaView>
     </SafeAreaProvider>
   );
-}
+};
+
+export default TodoForm;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
     height: "100%",
+    width: "100%",
     padding: 16,
     overflow: "hidden",
+    backgroundColor: "white",
   },
 });

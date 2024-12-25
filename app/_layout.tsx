@@ -39,7 +39,10 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="slide"
-          options={{ presentation: "modal", headerShown: false }}
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
         />
         <Stack.Screen name="+not-found" />
       </Stack>
