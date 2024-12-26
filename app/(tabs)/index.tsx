@@ -6,14 +6,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import React from "react";
+import { useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { AntDesign, Entypo, Feather, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import TodoForm from "@/components/ui/TodoForm";
 import ListItem from "@/components/ListItem";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 export default function HomeScreen() {
   const data = [
     {
@@ -48,7 +47,8 @@ export default function HomeScreen() {
     },
   ];
 
-  const [openForm, setOpenForm] = React.useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const [items, setItems] = useState(data);
 
   const handleFormClose = () => {
     setOpenForm(false);
@@ -70,11 +70,6 @@ export default function HomeScreen() {
           >
             TO DO LIST
           </Text>
-          <TouchableOpacity
-            onPress={() => Alert.alert("Setting Button pressed")}
-          >
-            <Ionicons name="settings-outline" size={24} />
-          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -97,7 +92,9 @@ export default function HomeScreen() {
               LIST OF TODO
             </Text>
           </View>
-          <AntDesign name="filter" size={24} />
+          <TouchableOpacity>
+            <AntDesign name="filter" size={24} />
+          </TouchableOpacity>
         </View>
 
         <FlatList
@@ -105,7 +102,7 @@ export default function HomeScreen() {
             width: "100%",
             paddingBottom: 100,
           }}
-          data={data}
+          data={items}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
   headContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     padding: 8,
     alignItems: "center",
   },
