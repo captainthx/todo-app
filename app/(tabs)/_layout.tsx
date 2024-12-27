@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, useNavigation, router } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
 
@@ -7,9 +7,11 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import TopBarNavigation from "@/components/ui/TopBarNavigation";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const goback = router.canGoBack();
 
   return (
     <Tabs
@@ -43,6 +45,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="todoDetail"
+        options={{
           href: null,
         }}
       />

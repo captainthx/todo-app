@@ -1,5 +1,4 @@
 import {
-  Alert,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -14,41 +13,48 @@ import TodoForm from "@/components/ui/TodoForm";
 import ListItem from "@/components/ListItem";
 
 export default function HomeScreen() {
+  const fixedContent =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   const data = [
     {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      id: "1",
       title: "First Item",
-      content: "This is the first item",
+      content: fixedContent,
+      discription: "This is the first item",
     },
     {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      id: "2",
       title: "Second Item",
-      content: "This is the second item",
+      content: fixedContent,
+      discription: "This is the second item",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
+      id: "3",
       title: "Third Item",
-      content: "This is the third item",
+      content: fixedContent,
+      discription: "This is the third item",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d73",
+      id: "4",
       title: "Fourt Item",
-      content: "This is the fourt item",
+      content: fixedContent,
+      discription: "This is the fourth item",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d74",
+      id: "5",
       title: "Five Item",
-      content: "This is the five item",
+      content: fixedContent,
+      discription: "This is the fifth item",
     },
     {
-      id: "58694a0f-3da1-471f-bd96-2323",
+      id: "6",
       title: "Six Item",
-      content: "This is the six item",
+      content: fixedContent,
+      discription: "This is the sixth item",
     },
   ];
 
   const [openForm, setOpenForm] = useState(false);
-  const [items, setItems] = useState(data);
 
   const handleFormClose = () => {
     setOpenForm(false);
@@ -62,7 +68,6 @@ export default function HomeScreen() {
         <View style={styles.headContainer}>
           <Text
             style={{
-              alignItems: "center",
               fontFamily: "worksans-semi-bold",
               fontSize: 24,
               color: "#F79E89",
@@ -102,7 +107,7 @@ export default function HomeScreen() {
             width: "100%",
             paddingBottom: 100,
           }}
-          data={items}
+          data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />

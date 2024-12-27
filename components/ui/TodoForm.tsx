@@ -7,13 +7,12 @@ import {
   Modal,
   TouchableOpacity,
   Image,
-  Button,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import dayjs from "dayjs";
 import * as ImagePicker from "expo-image-picker";
-import { AntDesign, Fontisto, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Fontisto } from "@expo/vector-icons";
 import RNDateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
