@@ -1,4 +1,5 @@
 import {
+  Appearance,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import TodoForm from "@/components/ui/TodoForm";
 import ListItem from "@/components/ListItem";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function HomeScreen() {
   const fixedContent =

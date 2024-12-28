@@ -11,7 +11,6 @@ import TopBarNavigation from "@/components/ui/TopBarNavigation";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const goback = router.canGoBack();
 
   return (
     <Tabs
