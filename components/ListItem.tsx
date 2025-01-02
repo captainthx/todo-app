@@ -12,7 +12,19 @@ import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 import { router } from "expo-router";
 
-const ListItem = ({ item }: any) => {
+type Todo = {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+};
+
+type ListItemProps = {
+  item: Todo;
+};
+
+const ListItem = ({ item }: ListItemProps) => {
+
   const [openOptions, setOpenOptions] = React.useState(false);
 
   const optionItems = [
@@ -75,7 +87,7 @@ const ListItem = ({ item }: any) => {
                   fontSize: 22,
                 }}
               >
-                {item.title}
+                {item.id}
               </Text>
             </View>
             <TouchableOpacity onPress={() => setOpenOptions(!openOptions)}>
@@ -141,7 +153,7 @@ const ListItem = ({ item }: any) => {
               </TouchableWithoutFeedback>
             </Modal>
           </View>
-          <Text style={{ fontSize: 16 }}>{item.discription}</Text>
+          <Text style={{ fontSize: 16 }}>{item.todo}</Text>
         </View>
       </TouchableOpacity>
     </SafeAreaView>

@@ -12,18 +12,20 @@ import { Stack } from "expo-router";
 import TopBarNavigation from "@/components/ui/TopBarNavigation";
 
 type Todo = {
-  id: string;
-  title: string;
-  content: string;
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
 };
 
 export default function todoDetail() {
   const { data } = useLocalSearchParams<{ data: string }>();
 
   const [todoData, setTodoData] = useState<Todo>({
-    id: "",
-    title: "",
-    content: "",
+    id: 0,
+    todo: "",
+    completed: false,
+    userId: 0,
   });
 
   const [lineText, setLineText] = useState<number | undefined>(20);
@@ -64,16 +66,7 @@ export default function todoDetail() {
           justifyContent: "center",
           alignItems: "center",
         }}
-      >
-        <Text
-          style={{
-            fontSize: 24,
-            fontFamily: "worksans-semi-bold",
-          }}
-        >
-          {todoData.title}
-        </Text>
-      </View>
+      ></View>
       <ScrollView>
         <View
           style={{
@@ -92,7 +85,7 @@ export default function todoDetail() {
                 fontFamily: "worksans",
               }}
             >
-              {todoData.content}
+              {todoData.todo}
             </Text>
           </TouchableOpacity>
         </View>

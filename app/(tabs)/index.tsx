@@ -1,5 +1,5 @@
 import {
-  Appearance,
+  ActivityIndicator,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -12,57 +12,45 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import TodoForm from "@/components/ui/TodoForm";
 import ListItem from "@/components/ListItem";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import axios from "axios";
+import { useInfiniteQuery } from "react-query";
 
 export default function HomeScreen() {
-  const fixedContent =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-  const data = [
-    {
-      id: "1",
-      title: "First Item",
-      content: fixedContent,
-      discription: "This is the first item",
-    },
-    {
-      id: "2",
-      title: "Second Item",
-      content: fixedContent,
-      discription: "This is the second item",
-    },
-    {
-      id: "3",
-      title: "Third Item",
-      content: fixedContent,
-      discription: "This is the third item",
-    },
-    {
-      id: "4",
-      title: "Fourt Item",
-      content: fixedContent,
-      discription: "This is the fourth item",
-    },
-    {
-      id: "5",
-      title: "Five Item",
-      content: fixedContent,
-      discription: "This is the fifth item",
-    },
-    {
-      id: "6",
-      title: "Six Item",
-      content: fixedContent,
-      discription: "This is the sixth item",
-    },
-  ];
-
+  type Todo = {
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
+  };
   const [openForm, setOpenForm] = useState(false);
+
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["todos"],
+      queryFn: async ({ pageParam = 0 }) => {
+        const response = await axios.get(
+          `https://dummyjson.com/todos?limit=10&skip=${pageParam}`
+        );
+        return response.data;
+      },
+      getNextPageParam: (lastPage, pages) => {
+        // DummyJSON has 150 total todos
+        const nextSkip = pages.length * 10;
+        return nextSkip < 150 ? nextSkip : undefined;
+      },
+    });
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const handleFormClose = () => {
     setOpenForm(false);
   };
 
-  const renderItem = ({ item }: any) => <ListItem item={item} />;
+  const renderItem = ({ item }: { item: Todo }) => <ListItem item={item} />;
 
   return (
     <SafeAreaProvider>
@@ -104,14 +92,37 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
+        {isLoading ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size={"large"} color="#F76C6A" />
+          </View>
+        ) : null}
+
         <FlatList
           contentContainerStyle={{
             width: "100%",
             paddingBottom: 100,
           }}
-          data={data}
+          data={data?.pages.flatMap((page) => page.todos) || []}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={() =>
+            isFetchingNextPage ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ActivityIndicator size={"large"} color="#F76C6A" />
+              </View>
+            ) : null
+          }
         />
 
         <View
