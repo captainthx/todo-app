@@ -14,6 +14,7 @@ import TodoForm from "@/components/ui/TodoForm";
 import ListItem from "@/components/ListItem";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
+import { Stack } from "expo-router";
 
 export default function HomeScreen() {
   type Todo = {
@@ -54,6 +55,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaProvider>
+      <Stack.Screen options={{ gestureEnabled: false }} />
       <SafeAreaView style={styles.container}>
         <View style={styles.headContainer}>
           <Text
