@@ -152,7 +152,16 @@ const ListItem = ({ item }: ListItemProps) => {
               </TouchableWithoutFeedback>
             </Modal>
           </View>
-          <Text style={{ fontSize: 16, color: "white" }}>{item.todo}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 16, color: "white" }}>{item.todo}</Text>
+            <Text>{item.completed ? "✅" : "❌"}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </SafeAreaView>
