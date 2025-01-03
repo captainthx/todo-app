@@ -23,6 +23,19 @@ export default function HomeScreen() {
     userId: number;
   };
   const [openForm, setOpenForm] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const loadData = async () => {
+    setIsRefreshing(true);
+    try {
+      const response = await axios.get(
+        "https://dummyjson.com/todos?limit=10&skip=0"
+      );
+      return response.data;
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } =
     useInfiniteQuery({
@@ -50,7 +63,9 @@ export default function HomeScreen() {
     setOpenForm(false);
   };
 
-  const renderItem = ({ item }: { item: Todo }) => <ListItem item={item} />;
+  const renderItem = ({ item }: { item: Todo }) => (
+    <ListItem item={item} onUpdate={loadData} />
+  );
 
   return (
     <SafeAreaProvider>
@@ -109,6 +124,8 @@ export default function HomeScreen() {
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           onEndReached={loadMore}
+          refreshing={isRefreshing}
+          onRefresh={loadData}
           onEndReachedThreshold={0.5}
           ListFooterComponent={() =>
             isFetchingNextPage ? (

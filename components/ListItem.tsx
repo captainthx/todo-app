@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Text,
   View,
@@ -11,6 +11,7 @@ import {
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 import { router } from "expo-router";
+import axios from "axios";
 
 type Todo = {
   id: number;
@@ -21,17 +22,46 @@ type Todo = {
 
 type ListItemProps = {
   item: Todo;
+  onUpdate: (todo: Todo) => void;
 };
 
-const ListItem = ({ item }: ListItemProps) => {
-  const [openOptions, setOpenOptions] = React.useState(false);
+const ListItem = ({ item, onUpdate }: ListItemProps) => {
+  const [openOptions, setOpenOptions] = useState(false);
+
+  const onCompleteTodo = async (id: number) => {
+    try {
+      const response = await axios.put(`https://dummyjson.com/todos/${id}`, {
+        completed: true,
+      });
+
+      if (response.data) {
+        Alert.alert("Update todo", "update todo completed.!", [
+          {
+            text: "ok",
+            onPress: () => {
+              setOpenOptions(false);
+              onUpdate(response.data);
+            },
+          },
+
+          {
+            text: "cancel",
+            style: "cancel",
+            onPress: () => setOpenOptions(false),
+          },
+        ]);
+      }
+    } catch (error) {
+      console.log("error update todo", error);
+    }
+  };
 
   const optionItems = [
     {
       id: "complete",
       title: "Complete",
       icon: <Ionicons name="checkmark-done" size={24} />,
-      action: () => Alert.alert("Complete"),
+      action: (id: any) => onCompleteTodo(id),
     },
     {
       id: "edit",
@@ -128,9 +158,9 @@ const ListItem = ({ item }: ListItemProps) => {
                         borderBottomRightRadius: 16,
                       }}
                     >
-                      {optionItems.map((item, index) => (
+                      {optionItems.map((option, index) => (
                         <TouchableOpacity
-                          onPress={item.action}
+                          onPress={() => option.action(item.id)}
                           key={index}
                           style={{
                             width: "100%",
@@ -142,8 +172,8 @@ const ListItem = ({ item }: ListItemProps) => {
                             borderBottomColor: "rgba(163, 160, 160, 0.1)",
                           }}
                         >
-                          {item.icon}
-                          <Text style={{ marginLeft: 16 }}>{item.title}</Text>
+                          {option.icon}
+                          <Text style={{ marginLeft: 16 }}>{option.title}</Text>
                         </TouchableOpacity>
                       ))}
                     </View>
