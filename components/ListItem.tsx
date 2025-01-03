@@ -24,7 +24,6 @@ type ListItemProps = {
 };
 
 const ListItem = ({ item }: ListItemProps) => {
-
   const [openOptions, setOpenOptions] = React.useState(false);
 
   const optionItems = [
@@ -84,7 +83,7 @@ const ListItem = ({ item }: ListItemProps) => {
                 style={{
                   color: "white",
                   fontFamily: "worksans-semi-bold",
-                  fontSize: 22,
+                  fontSize: 24,
                 }}
               >
                 {item.id}
@@ -153,7 +152,7 @@ const ListItem = ({ item }: ListItemProps) => {
               </TouchableWithoutFeedback>
             </Modal>
           </View>
-          <Text style={{ fontSize: 16 }}>{item.todo}</Text>
+          <Text style={{ fontSize: 16, color: "white" }}>{item.todo}</Text>
         </View>
       </TouchableOpacity>
     </SafeAreaView>
