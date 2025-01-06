@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { Stack } from "expo-router";
 import TopBarNavigation from "@/components/ui/TopBarNavigation";
+import ViewShot, { captureRef } from "react-native-view-shot";
+import * as Sharing from "expo-sharing";
 
 type Todo = {
   id: number;
@@ -20,7 +22,7 @@ type Todo = {
 
 export default function todoDetail() {
   const { data } = useLocalSearchParams<{ data: string }>();
-
+  const ref = useRef<any>();
   const [todoData, setTodoData] = useState<Todo>({
     id: 0,
     todo: "",
@@ -36,6 +38,13 @@ export default function todoDetail() {
       return;
     }
     setLineText(undefined);
+  };
+
+  const share = async () => {
+    const uri = await captureRef(ref);
+    if (uri) {
+      await Sharing.shareAsync(uri);
+    }
   };
 
   useEffect(() => {
@@ -56,40 +65,44 @@ export default function todoDetail() {
             fontFamily: "worksans-semi-bold",
             fontSize: 24,
           },
-          headerTitle: () => <TopBarNavigation name="Detail" />,
+          headerTitle: () => (
+            <TopBarNavigation name="Detail" onSharing={share} />
+          ),
         }}
       />
-      <View
-        style={{
-          width: "100%",
-          padding: 8,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      ></View>
-      <ScrollView>
+      <ViewShot ref={ref}>
         <View
           style={{
-            margin: 8,
-            padding: 20,
-            backgroundColor: "rgba(255, 255, 255, 0.81)",
-            borderRadius: 16,
-            marginBottom: 100,
+            width: "100%",
+            padding: 8,
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        >
-          <TouchableOpacity onPress={showMoreText}>
-            <Text
-              numberOfLines={lineText}
-              style={{
-                fontSize: 16,
-                fontFamily: "worksans",
-              }}
-            >
-              {todoData.todo}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+        ></View>
+        <ScrollView>
+          <View
+            style={{
+              margin: 8,
+              padding: 20,
+              backgroundColor: "rgba(255, 255, 255, 0.81)",
+              borderRadius: 16,
+              marginBottom: 100,
+            }}
+          >
+            <TouchableOpacity onPress={showMoreText}>
+              <Text
+                numberOfLines={lineText}
+                style={{
+                  fontSize: 16,
+                  fontFamily: "worksans",
+                }}
+              >
+                {todoData.todo}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </ViewShot>
     </SafeAreaView>
   );
 }

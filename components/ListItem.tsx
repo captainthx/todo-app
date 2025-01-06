@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import {
   Text,
   View,
@@ -12,8 +12,6 @@ import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 import { router } from "expo-router";
 import axios from "axios";
-import * as Sharing from "expo-sharing";
-import ViewShot from "react-native-view-shot";
 
 type Todo = {
   id: number;
@@ -29,7 +27,6 @@ type ListItemProps = {
 
 const ListItem = ({ item, onUpdate }: ListItemProps) => {
   const [openOptions, setOpenOptions] = useState(false);
-  const ref = useRef<ViewShot>();
 
   const onCompleteTodo = async (id: number) => {
     try {
@@ -71,19 +68,6 @@ const ListItem = ({ item, onUpdate }: ListItemProps) => {
       title: "Edit",
       icon: <SimpleLineIcons name="pencil" size={24} />,
       action: () => Alert.alert("Edit"),
-    },
-    {
-      id: "share",
-      title: "Share",
-      icon: <SimpleLineIcons name="share" size={24} />,
-      action: async () => {
-        if (ref.current) {
-          const uri = await ref.current.capture?.();
-          if (uri) {
-            await Sharing.shareAsync(uri);
-          }
-        }
-      },
     },
   ];
 
@@ -199,16 +183,7 @@ const ListItem = ({ item, onUpdate }: ListItemProps) => {
               alignItems: "center",
             }}
           >
-            <ViewShot
-              ref={ref as RefObject<ViewShot>}
-              captureMode="mount"
-              options={{
-                format: "png",
-                quality: 0.9,
-              }}
-            >
-              <Text style={{ fontSize: 16 }}>{item.todo}</Text>
-            </ViewShot>
+            <Text style={{ fontSize: 16 }}>{item.todo}</Text>
             <Text>{item.completed ? "✅" : "❌"}</Text>
           </View>
         </View>

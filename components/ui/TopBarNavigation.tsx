@@ -6,10 +6,15 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
-export default function TopBarNavigation({ name }: { name: string }) {
+type PropsItem = {
+  name: string;
+  onSharing: () => void;
+};
+
+export default function TopBarNavigation({ name, onSharing }: PropsItem) {
   return (
     <View
       style={{
@@ -33,6 +38,9 @@ export default function TopBarNavigation({ name }: { name: string }) {
       >
         {name}
       </Text>
+      <TouchableOpacity onPress={onSharing}>
+        <SimpleLineIcons name="share" size={24} />
+      </TouchableOpacity>
     </View>
   );
 }
