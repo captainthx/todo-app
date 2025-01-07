@@ -92,10 +92,3 @@ export default function todoDetail() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: "auto",
-    padding: 24,
-  },
-});
