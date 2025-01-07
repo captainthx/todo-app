@@ -88,7 +88,7 @@ const ListItem = ({ item, onUpdate }: ListItemProps) => {
             height: 100,
             padding: 8,
             marginBottom: 8,
-            backgroundColor: "#F79E89",
+            backgroundColor: "white",
             borderRadius: 16,
             overflow: "hidden",
           }}
@@ -147,9 +147,8 @@ const ListItem = ({ item, onUpdate }: ListItemProps) => {
                       style={{
                         width: "100%",
                         padding: 16,
-                        backgroundColor: "rgba(163, 160, 160, 0.1)",
-                        borderBottomLeftRadius: 16,
-                        borderBottomRightRadius: 16,
+                        backgroundColor: "white",
+                        borderRadius: 16,
                       }}
                     >
                       {optionItems.map((option, index) => (

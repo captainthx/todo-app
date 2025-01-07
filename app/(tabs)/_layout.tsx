@@ -1,4 +1,4 @@
-import { Tabs, useNavigation, router } from "expo-router";
+import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
 
@@ -7,7 +7,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import TopBarNavigation from "@/components/ui/TopBarNavigation";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -47,6 +47,16 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "profile",
+          tabBarIcon: ({ color }) => (
+            <SimpleLineIcons size={28} name="user" color={color} />
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="todoDetail"
         options={{

@@ -1,17 +1,11 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 type PropsItem = {
   name: string;
-  onSharing: () => void;
+  onSharing?: () => void;
 };
 
 export default function TopBarNavigation({ name, onSharing }: PropsItem) {
@@ -38,9 +32,11 @@ export default function TopBarNavigation({ name, onSharing }: PropsItem) {
       >
         {name}
       </Text>
-      <TouchableOpacity onPress={onSharing}>
-        <SimpleLineIcons name="share" size={24} />
-      </TouchableOpacity>
+      {onSharing && (
+        <TouchableOpacity onPress={onSharing}>
+          <SimpleLineIcons name="share" size={24} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

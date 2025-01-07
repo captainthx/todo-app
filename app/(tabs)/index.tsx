@@ -83,13 +83,12 @@ export default function HomeScreen() {
         </View>
         <View
           style={{
-            display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
             padding: 10,
           }}
         >
-          <View style={{ display: "flex", flexDirection: "row" }}>
+          <View style={{ flex: 1, flexDirection: "row" }}>
             <Entypo name="list" size={24} />
             <Text
               style={{
