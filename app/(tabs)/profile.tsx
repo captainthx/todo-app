@@ -12,6 +12,8 @@ import TopBarNavigation from "@/components/ui/TopBarNavigation";
 import { useQuery } from "react-query";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import Card from "@/components/ui/Card";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function profile() {
   type User = {
@@ -61,9 +63,9 @@ export default function profile() {
       action: () => Alert.alert("about"),
     },
   ];
-
+  const backgroundColor = useThemeColor({}, "background");
   return (
-    <SafeAreaView style={{ height: "100%", padding: 24 }}>
+    <SafeAreaView style={{ height: "100%", padding: 24, backgroundColor }}>
       <TopBarNavigation name={"profile"} />
       {isLoading ? (
         <View
@@ -73,17 +75,7 @@ export default function profile() {
         </View>
       ) : (
         <SafeAreaView>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "white",
-              marginTop: 24,
-              marginHorizontal: 20,
-              height: 150,
-              borderRadius: 16,
-            }}
-          >
+          <Card>
             <View
               style={{
                 flexDirection: "row",
@@ -139,7 +131,7 @@ export default function profile() {
                 </View>
               </View>
             </View>
-          </View>
+          </Card>
           <View
             style={{
               backgroundColor: "white",
