@@ -11,7 +11,6 @@ import {
 import TopBarNavigation from "@/components/ui/TopBarNavigation";
 import { useQuery } from "react-query";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import Card from "@/components/ui/Card";
 import { useThemeColor } from "@/hooks/useThemeColor";
 

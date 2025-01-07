@@ -12,6 +12,7 @@ import { Stack } from "expo-router";
 import TopBarNavigation from "@/components/ui/TopBarNavigation";
 import ViewShot, { captureRef } from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 type Todo = {
   id: number;
@@ -51,25 +52,10 @@ export default function todoDetail() {
     const json = JSON.parse(data);
     setTodoData(json);
   }, [data]);
-
+  const backgroundColor = useThemeColor({}, "background");
   return (
-    <SafeAreaView style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: "transparent",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontFamily: "worksans-semi-bold",
-            fontSize: 24,
-          },
-          headerTitle: () => (
-            <TopBarNavigation name="Detail" onSharing={share} />
-          ),
-        }}
-      />
+    <SafeAreaView style={{ height: "100%", padding: 24, backgroundColor }}>
+      <TopBarNavigation name="Detail" onSharing={share} />
       <ViewShot ref={ref}>
         <View
           style={{
@@ -110,5 +96,6 @@ export default function todoDetail() {
 const styles = StyleSheet.create({
   container: {
     height: "auto",
+    padding: 24,
   },
 });
