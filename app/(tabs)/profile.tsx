@@ -133,7 +133,7 @@ export default function profile() {
                       ID: {data?.id}
                     </Text>
                   </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity style={{ marginRight: 8 }}>
                     <AntDesign name="edit" size={24} />
                   </TouchableOpacity>
                 </View>
