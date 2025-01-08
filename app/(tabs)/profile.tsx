@@ -1,3 +1,8 @@
+import { ThemedText } from "@/components/ThemedText";
+import Card from "@/components/ui/Card";
+import TopBarNavigation from "@/components/ui/TopBarNavigation";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import {
   ActivityIndicator,
   Alert,
@@ -8,11 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import TopBarNavigation from "@/components/ui/TopBarNavigation";
 import { useQuery } from "react-query";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import Card from "@/components/ui/Card";
-import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function profile() {
   type User = {
@@ -39,33 +40,33 @@ export default function profile() {
       } as User;
     },
   });
+  const colorIcon = useThemeColor({}, "icon");
 
   const menuList = [
     {
       title: "account",
-      icon: <MaterialIcons name="person" size={24} />,
+      icon: <MaterialIcons name="person" size={24} color={colorIcon} />,
       action: () => Alert.alert("account"),
     },
     {
       title: "privacy policy",
-      icon: <MaterialIcons name="security" size={24} />,
+      icon: <MaterialIcons name="security" size={24} color={colorIcon} />,
       action: () => Alert.alert("privacy policy"),
     },
     {
       title: "setting",
-      icon: <MaterialIcons name="settings" size={24} />,
+      icon: <MaterialIcons name="settings" size={24} color={colorIcon} />,
       action: () => Alert.alert("setting"),
     },
     {
       title: "about",
-      icon: <MaterialIcons name="info" size={24} />,
+      icon: <MaterialIcons name="info" size={24} color={colorIcon} />,
       action: () => Alert.alert("about"),
     },
   ];
-  const backgroundColor = useThemeColor({}, "background");
   return (
-    <SafeAreaView style={{ height: "100%", padding: 24, backgroundColor }}>
-      <TopBarNavigation name={"profile"} />
+    <SafeAreaView style={{ height: "100%", padding: 24 }}>
+      <TopBarNavigation name={"Profile"} />
       {isLoading ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -79,7 +80,6 @@ export default function profile() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "center",
                 height: "auto",
               }}
             >
@@ -105,7 +105,8 @@ export default function profile() {
                   }}
                 >
                   <View style={{ flex: 1 }}>
-                    <Text
+                    <ThemedText
+                      type="defaultSemiBold"
                       style={{
                         fontFamily: "worksans",
                         fontSize: 16,
@@ -113,8 +114,9 @@ export default function profile() {
                       }}
                     >
                       {data?.username}
-                    </Text>
-                    <Text
+                    </ThemedText>
+                    <ThemedText
+                      type="defaultSemiBold"
                       style={{
                         fontFamily: "worksans",
                         fontSize: 16,
@@ -122,22 +124,19 @@ export default function profile() {
                       }}
                     >
                       ID: {data?.id}
-                    </Text>
+                    </ThemedText>
                   </View>
                   <TouchableOpacity style={{ marginRight: 8 }}>
-                    <AntDesign name="edit" size={24} />
+                    <AntDesign name="edit" size={24} color={colorIcon} />
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </Card>
-          <View
+
+          <Card
             style={{
-              backgroundColor: "white",
-              marginTop: 24,
-              marginHorizontal: 20,
               height: "auto",
-              borderRadius: 16,
             }}
           >
             <ScrollView>
@@ -146,7 +145,6 @@ export default function profile() {
                   style={{
                     margin: 8,
                     padding: 16,
-                    flex: 1,
                     flexDirection: "row",
                     justifyContent: "space-between",
                   }}
@@ -154,13 +152,12 @@ export default function profile() {
                 >
                   <View
                     style={{
-                      flex: 1,
                       flexDirection: "row",
                       alignItems: "center",
                     }}
                   >
                     {item.icon}
-                    <Text
+                    <ThemedText
                       style={{
                         marginLeft: 16,
                         fontFamily: "worksans",
@@ -168,15 +165,19 @@ export default function profile() {
                       }}
                     >
                       {item.title}
-                    </Text>
+                    </ThemedText>
                   </View>
                   <TouchableOpacity onPress={item.action}>
-                    <MaterialIcons name="arrow-forward" size={24} />
+                    <MaterialIcons
+                      name="arrow-forward"
+                      size={24}
+                      color={colorIcon}
+                    />
                   </TouchableOpacity>
                 </View>
               ))}
             </ScrollView>
-          </View>
+          </Card>
         </SafeAreaView>
       )}
     </SafeAreaView>

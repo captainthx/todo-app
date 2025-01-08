@@ -14,9 +14,10 @@ export default function index() {
     <View style={styles.container}>
       <View
         style={{
+          flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          height: "100%",
+          height: "auto",
         }}
       >
         <Image
@@ -24,7 +25,18 @@ export default function index() {
           source={require("../assets/images/check-list.png")}
         />
       </View>
-      <View style={styles.button}>
+      <View
+        style={{
+          height: 50,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#F79E89",
+          zIndex: 999,
+          marginVertical: 40,
+          borderRadius: 16,
+        }}
+      >
         <TouchableOpacity onPress={() => router.push("/(tabs)")}>
           <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>
             Get Started
@@ -39,20 +51,16 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
-    padding: 16,
+    padding: 24,
     backgroundColor: "white",
   },
   button: {
-    position: "absolute",
     justifyContent: "center",
-    left: 95,
-    right: 0,
     bottom: 100,
     height: 50,
     borderRadius: 10,
     backgroundColor: "#F79E89",
     width: 200,
-    marginHorizontal: 20,
   },
   image: {
     width: 370,

@@ -7,7 +7,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { SimpleLineIcons } from "@expo/vector-icons";
+import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -52,7 +52,7 @@ export default function TabLayout() {
         options={{
           title: "profile",
           tabBarIcon: ({ color }) => (
-            <SimpleLineIcons size={28} name="user" color={color} />
+            <MaterialIcons name="person" size={24} color={color} />
           ),
         }}
       />
