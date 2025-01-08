@@ -9,7 +9,6 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -142,40 +141,40 @@ export default function profile() {
           >
             <ScrollView>
               {menuList.map((item, index: number) => (
-                <View
-                  style={{
-                    margin: 8,
-                    padding: 16,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                  key={index}
-                >
+                <TouchableOpacity onPress={item.action} key={index}>
                   <View
                     style={{
+                      margin: 8,
+                      padding: 16,
                       flexDirection: "row",
-                      alignItems: "center",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {item.icon}
-                    <ThemedText
+                    <View
                       style={{
-                        marginLeft: 16,
-                        fontFamily: "worksans",
-                        fontSize: 16,
+                        flexDirection: "row",
+                        alignItems: "center",
                       }}
                     >
-                      {item.title}
-                    </ThemedText>
-                  </View>
-                  <TouchableOpacity onPress={item.action}>
+                      {item.icon}
+                      <ThemedText
+                        style={{
+                          marginLeft: 16,
+                          fontFamily: "worksans",
+                          fontSize: 16,
+                        }}
+                      >
+                        {item.title}
+                      </ThemedText>
+                    </View>
+
                     <MaterialIcons
                       name="arrow-forward"
                       size={24}
                       color={colorIcon}
                     />
-                  </TouchableOpacity>
-                </View>
+                  </View>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           </Card>
