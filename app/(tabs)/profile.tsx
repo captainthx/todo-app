@@ -41,6 +41,7 @@ export default function profile() {
     },
   });
   const colorIcon = useThemeColor({}, "icon");
+  const backgroundColor = useThemeColor({}, "background");
 
   const menuList = [
     {
@@ -65,7 +66,7 @@ export default function profile() {
     },
   ];
   return (
-    <SafeAreaView style={{ height: "100%", padding: 24 }}>
+    <SafeAreaView style={{ height: "100%", padding: 24, backgroundColor }}>
       <TopBarNavigation name={"Profile"} />
       {isLoading ? (
         <View

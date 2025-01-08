@@ -1,7 +1,10 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import { ThemedText } from "../ThemedText";
+import { ThemedView } from "../ThemedView";
 
 type PropsItem = {
   name: string;
@@ -9,20 +12,21 @@ type PropsItem = {
 };
 
 export default function TopBarNavigation({ name, onSharing }: PropsItem) {
+  const colorIcon = useThemeColor({}, "icon");
+
   return (
-    <View
+    <ThemedView
       style={{
-        width: "100%",
-        padding: 8,
+        padding: 16,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
       <TouchableOpacity onPress={() => router.back()}>
-        <MaterialIcons name="arrow-back" size={24} />
+        <MaterialIcons name="arrow-back" size={24} color={colorIcon} />
       </TouchableOpacity>
-      <Text
+      <ThemedText
         style={{
           flex: 1,
           textAlign: "center",
@@ -31,12 +35,12 @@ export default function TopBarNavigation({ name, onSharing }: PropsItem) {
         }}
       >
         {name}
-      </Text>
+      </ThemedText>
       {onSharing && (
         <TouchableOpacity onPress={onSharing}>
-          <SimpleLineIcons name="share" size={24} />
+          <SimpleLineIcons name="share" size={24} color={colorIcon} />
         </TouchableOpacity>
       )}
-    </View>
+    </ThemedView>
   );
 }
